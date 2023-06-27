@@ -24,7 +24,7 @@ type ContactFormType = {
 };
 
 const ContactFormInitialValues: ContactFormType = {
-    "form-name": "contact-form-test",
+    "form-name": "contact",
     "bot-field": "",
     name: "",
     email: "",
@@ -35,7 +35,7 @@ const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelper
     console.log('HANDLE SUBMIT');
     formikHelpers.setSubmitting(true);
     let formData = new FormData()
-    formData.append('form-name', 'contact-form-test')
+    formData.append('form-name', 'contact')
     formData.append('name', values.name)
     formData.append('email', values.email)
     formData.append('message', values.message)
@@ -80,7 +80,7 @@ export const ContactForm = () => {
                     onSubmit={handleSubmit}
                 >
                     {({errors, touched, isValid, dirty}) =>(
-                    <Form name="contact-form-test" data-netlify="true" data-netlify-honeypot="bot-field">
+                    <Form name="contact" data-netlify="true" data-netlify-honeypot="bot-field">
                         <Field type="hidden" name="form-name" />
                         <Field type="hidden" name="bot-field" />
                     <FormControl>
