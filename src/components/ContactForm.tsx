@@ -16,6 +16,7 @@ import * as Yup from "yup";
 
 type ContactFormType = {
     "form-name": string;
+    "bot-field": string;
     name: string;
     email: string;
     message: string;
@@ -23,6 +24,7 @@ type ContactFormType = {
 
 const ContactFormInitialValues: ContactFormType = {
     "form-name": "contact-form-test",
+    "bot-field": "",
     name: "",
     email: "",
     message: "",
@@ -36,6 +38,7 @@ const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelper
     formData.append('name', values.name)
     formData.append('email', values.email)
     formData.append('message', values.message)
+    formData.append('bot-field', values['bot-field'])
 
     try {
         await axios.post<FormData>('/', formData, {
@@ -75,8 +78,9 @@ export const ContactForm = () => {
                     onSubmit={handleSubmit}
                 >
                     {({errors, touched, isValid, dirty}) =>(
-                    <Form name="contact-form-test">
+                    <Form name="contact-form-test" data-netlify="true" netlify-honeypot="bot-field">
                         <Field type="hidden" name="form-name" />
+                        <Field type="hidden" name="bot-field" />
                     <FormControl>
                         <FormLabel>Name</FormLabel>
                         <Field as={Input} 
