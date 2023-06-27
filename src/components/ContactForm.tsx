@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
+import queryString from "query-string";
 import {
     Button,
     Grid,
@@ -40,8 +41,9 @@ const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelper
     formData.append('message', values.message)
     formData.append('bot-field', values['bot-field'])
 
+    const data = queryString.stringify(values)
     try {
-        await axios.post<FormData>('/', formData, {
+        await axios.post<FormData>('/', data, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
