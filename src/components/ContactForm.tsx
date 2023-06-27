@@ -78,7 +78,7 @@ export const ContactForm = () => {
                     onSubmit={handleSubmit}
                 >
                     {({errors, touched, isValid, dirty}) =>(
-                    <Form name="contact-form-test" data-netlify="true" netlify-honeypot="bot-field">
+                    <Form name="contact-form-test" data-netlify="true" data-netlify-honeypot="bot-field">
                         <Field type="hidden" name="form-name" />
                         <Field type="hidden" name="bot-field" />
                     <FormControl>
