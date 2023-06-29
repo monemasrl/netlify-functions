@@ -22,6 +22,8 @@ type ContactFormType = {
     last_name: string;
     email: string;
     subject: string;
+    phone?: string;
+    mobile?: string;
     message: string;
 };
 
@@ -29,6 +31,8 @@ const ContactFormInitialValues: ContactFormType = {
     "form-name": "contact",
     "bot-field": "",
     first_name: "",
+    phone: "",
+    mobile: "",
     last_name: "",
     email: "",
     subject: "",
@@ -46,6 +50,8 @@ const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelper
     formData.append('subject', values.subject)
     formData.append('message', values.message)
     formData.append('bot-field', values['bot-field'])
+    if (values.phone) formData.append('phone', values.phone)
+    if (values.mobile) formData.append('mobile', values.mobile)
 
     const data = queryString.stringify(values)
     try {
@@ -124,6 +130,24 @@ export const ContactForm = () => {
                             margin="dense" 
                         />
                         {errors.email && (<ErrorMessage name="email" />)}
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Phone</FormLabel>
+                        <Field as={Input} 
+                            name="phone"
+                            margin="dense"
+                            error={Boolean(errors.phone) && Boolean(touched.phone)}
+                        />
+                        {errors.email && (<ErrorMessage name="phone" />)}
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Mobile</FormLabel>
+                        <Field as={Input} 
+                            name="mobile"
+                            margin="dense"
+                            error={Boolean(errors.mobile) && Boolean(touched.mobile)}
+                        />
+                        {errors.email && (<ErrorMessage name="mobile" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Subject</FormLabel>
