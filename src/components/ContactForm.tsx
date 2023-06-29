@@ -18,16 +18,20 @@ import * as Yup from "yup";
 type ContactFormType = {
     "form-name": string;
     "bot-field": string;
-    name: string;
+    first_name: string;
+    last_name: string;
     email: string;
+    subject: string;
     message: string;
 };
 
 const ContactFormInitialValues: ContactFormType = {
     "form-name": "contact",
     "bot-field": "",
-    name: "",
+    first_name: "",
+    last_name: "",
     email: "",
+    subject: "",
     message: "",
 };
 
@@ -36,8 +40,10 @@ const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelper
     formikHelpers.setSubmitting(true);
     let formData = new FormData()
     formData.append('form-name', 'contact')
-    formData.append('name', values.name)
+    formData.append('first_name', values.first_name)
+    formData.append('last_name', values.last_name)
     formData.append('email', values.email)
+    formData.append('subject', values.subject)
     formData.append('message', values.message)
     formData.append('bot-field', values['bot-field'])
 
@@ -84,13 +90,22 @@ export const ContactForm = () => {
                         <Field type="hidden" name="form-name" />
                         <Field type="hidden" name="bot-field" />
                     <FormControl>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>First Name</FormLabel>
                         <Field as={Input} 
-                            name="name"
+                            name="first_name"
                             margin="dense"
-                            error={Boolean(errors.name) && Boolean(touched.name)}
+                            error={Boolean(errors.first_name) && Boolean(touched.first_name)}
                         />
-                        {errors.email && (<ErrorMessage name="name" />)}
+                        {errors.email && (<ErrorMessage name="first_name" />)}
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Last Name</FormLabel>
+                        <Field as={Input} 
+                            name="last_name"
+                            margin="dense"
+                            error={Boolean(errors.last_name) && Boolean(touched.last_name)}
+                        />
+                        {errors.email && (<ErrorMessage name="last_name" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Email Address</FormLabel>
@@ -103,6 +118,15 @@ export const ContactForm = () => {
                             margin="dense" 
                         />
                         {errors.email && (<ErrorMessage name="email" />)}
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Subject</FormLabel>
+                        <Field as={Input} 
+                            name="subject"
+                            margin="dense"
+                            error={Boolean(errors.subject) && Boolean(touched.subject)}
+                        />
+                        {errors.email && (<ErrorMessage name="subject" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Message</FormLabel>
