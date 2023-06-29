@@ -78,7 +78,7 @@ export const ContactForm = () => {
                 <Typography level="h5">Basic Formik Form Validation</Typography>
                 <Formik
                     initialValues={ContactFormInitialValues}
-                    validationSchema={Yup.object({
+                    validationSchema={Yup.object().shape({
                         first_name: Yup.string()
                             .max(15, "Must be 15 characters or less")
                             .required("Required"),
@@ -88,20 +88,18 @@ export const ContactForm = () => {
                         subject: Yup.string()
                             .max(50, "Must be 50 characters or less")
                             .required("Required"),
-                        phone: Yup.string().when("mobile", {
-                            is: (mobile: string) => !mobile || mobile.length === 0,
-                            then: Yup.string()
-                                .max(15, "Must be 15 characters or less")
-                                .required("One of Phone or Mobile is required"),
-                            otherwise: Yup.string().max(15, "Must be 15 characters or less"),
-                        }),
-                        mobile: Yup.string().when("phone", {
-                            is: (phone: string) => !phone || phone.length === 0,
-                            then: Yup.string()
-                                .max(15, "Must be 15 characters or less")
-                                .required("One of Phone or Mobile is required"),
-                            otherwise: Yup.string().max(15, "Must be 15 characters or less"),
-                        }),
+                        phone: Yup.string()
+                            .when("mobile", {
+                                is: (mobile: string) => !mobile || mobile.length === 0,
+                                then: (s) => s.max(15, "Must be 15 characters or less").required("One of Phone or Mobile is required"),
+                                otherwise: (s) => s.max(15, "Must be 15 characters or less"),
+                            }),
+                        mobile: Yup.string()
+                            .when('phone', {
+                                is: (phone: string) => !phone || phone.length === 0, // alternatively: (val) => val == true
+                                then: (s) => s.max(15, "Must be 15 characters or less").required("One of Phone or Mobile is required"),
+                                otherwise: (s) => s.max(15, "Must be 15 characters or less"),
+                            }),
                         email: Yup.string()
                             .email("Invalid email address")
                             .required("Required"),
