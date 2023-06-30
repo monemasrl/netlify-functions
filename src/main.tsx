@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { SnackbarProvider } from 'notistack';
 import App from './App.tsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <SnackbarProvider maxSnack={3}>
+      <App />
+    </SnackbarProvider>
   </React.StrictMode>,
 )

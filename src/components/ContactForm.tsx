@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import queryString from "query-string";
+import { useSnackbar } from 'notistack';
 import {
     Button,
     Grid,
@@ -39,41 +40,80 @@ const ContactFormInitialValues: ContactFormType = {
     message: "",
 };
 
-const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelpers<ContactFormType>) => {
-    console.log('HANDLE SUBMIT');
-    formikHelpers.setSubmitting(true);
-    let formData = new FormData()
-    formData.append('form-name', 'contact')
-    formData.append('first_name', values.first_name)
-    formData.append('last_name', values.last_name)
-    formData.append('email', values.email)
-    formData.append('subject', values.subject)
-    formData.append('message', values.message)
-    formData.append('bot-field', values['bot-field'])
-    if (values.phone) formData.append('phone', values.phone)
-    if (values.mobile) formData.append('mobile', values.mobile)
 
-    const data = queryString.stringify(values)
-    try {
-        await axios.post<FormData>('/', data, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-    } catch (error) {
-        console.log(error);
-    } finally {
-        formikHelpers.setSubmitting(false);
-    }
-
-}
 
 export const ContactForm = () => {
+    const { enqueueSnackbar } = useSnackbar();
+
+    const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelpers<ContactFormType>) => {
+        formikHelpers.setSubmitting(true);
+        let formData = new FormData()
+        formData.append('form-name', 'contact')
+        formData.append('first_name', values.first_name)
+        formData.append('last_name', values.last_name)
+        formData.append('email', values.email)
+        formData.append('subject', values.subject)
+        formData.append('message', values.message)
+        formData.append('bot-field', values['bot-field'])
+        if (values.phone) formData.append('phone', values.phone)
+        if (values.mobile) formData.append('mobile', values.mobile)
+    
+        const data = queryString.stringify(values)
+
+        try {
+            await axios.post<FormData>('/', data, {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            enqueueSnackbar('Richiesta inviata con successo', { 
+                variant: 'success',
+                autoHideDuration: 2000,
+                anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }
+            });
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                enqueueSnackbar('Errore di comunicazione, riprova tra poco', { 
+                    variant: 'error',
+                    autoHideDuration: 3000,
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }
+                });
+            } else if (err instanceof Error) {
+                enqueueSnackbar("E' avvenuto un errore", { 
+                    variant: 'error',
+                    autoHideDuration: 3000,
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }
+                });
+            } else {
+                enqueueSnackbar("E' accaduto qualcosa di inatteso", { 
+                    variant: 'error',
+                    autoHideDuration: 3000,
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }
+                });
+            }
+        } finally {
+            formikHelpers.setSubmitting(false);
+        }
+    
+    }
+
     return (
         <Grid container>
         <Grid sm={3} xs={false}></Grid>
         <Grid sm={6} xs={12}>
-          <Sheet>
+        <Sheet>
             <Box m={5} p={3}>
                 <Typography level="h5">Basic Formik Form Validation</Typography>
                 <Formik

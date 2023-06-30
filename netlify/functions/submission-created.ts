@@ -60,7 +60,6 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const response = await axios.post(API_ENDPOINT, requestBody);
     return { statusCode: 200, body: JSON.stringify({ response }) };
   } catch (error) {
-    console.log(error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Failed posting data' }),
