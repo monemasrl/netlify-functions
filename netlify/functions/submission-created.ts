@@ -51,7 +51,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       "created_at": body.created_at
     }
 
-    console.log('requestBody', requestBody);
+    console.log('body: ', body.data);
+    console.log('requestBody: ', requestBody);
 
     
     const otherFields = Object.keys(rest).map(key => {
