@@ -5,6 +5,13 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
   // your server-side functionality
   try {
     const API_ENDPOINT = process.env.CRM_API_ENDPOINT;
+
+    if (event.body === null) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Missing payload' }),
+      };
+    }
     const body = JSON.parse(event.body).payload
 
     /**
@@ -51,10 +58,6 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       "created_at": body.created_at
     }
 
-    console.log('body: ', body.data);
-    console.log('requestBody: ', requestBody);
-
-    
     const otherFields = Object.keys(rest).map(key => {
       return `${key}: ${rest[key]}`
     })

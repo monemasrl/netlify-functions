@@ -1,5 +1,6 @@
+import React from "react";
 import axios from "axios";
-import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers, useField } from "formik";
 import queryString from "query-string";
 import { useSnackbar } from 'notistack';
 import {
@@ -12,7 +13,9 @@ import {
     Divider,
     FormControl,
     FormLabel,
-    Input
+    Input,
+    Select,
+    Option
 } from "@mui/joy";
 import * as Yup from "yup";
 
@@ -40,7 +43,28 @@ const ContactFormInitialValues: ContactFormType = {
     message: "",
 };
 
+const SubjectSelectOptions = (props: any) => {
+    const [field, meta, helpers] = useField(props.field.name);
+    
+    const onChange = (e: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.FocusEvent<Element, Element> | null, value: {} | null) => {
+        helpers.setValue(value);
+    }
 
+    return (
+    <>
+        <Select {...props}
+            placeholder="Select a pet…"
+            onChange={onChange}
+            value={field.value}
+            onBlur={() => helpers.setTouched(true)}
+        >
+            <Option value="web">Sviluppo siti corporate, e-commerce (b2b/b2c) </Option>
+            <Option value="email">Servizio di posta elettronica</Option>
+            <Option value="social_adv">Servizi di Social Advertising, Gestione Campagne</Option>
+            <Option value="bird">Altro</Option>
+        </Select>
+    </>
+)}
 
 export const ContactForm = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -205,10 +229,9 @@ export const ContactForm = () => {
                     </FormControl>
                     <FormControl>
                         <FormLabel>Subject</FormLabel>
-                        <Field as={Input} 
+                        <Field 
+                            component={SubjectSelectOptions} 
                             name="subject"
-                            margin="dense"
-                            error={Boolean(errors.subject) && Boolean(touched.subject)}
                         />
                         {errors.subject && (<ErrorMessage name="subject" />)}
                     </FormControl>
