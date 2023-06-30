@@ -44,8 +44,10 @@ const ContactFormInitialValues: ContactFormType = {
 };
 
 const SubjectSelectOptions = (props: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [field, meta, helpers] = useField(props.field.name);
     
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const onChange = (e: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.FocusEvent<Element, Element> | null, value: {} | null) => {
         helpers.setValue(value);
     }
