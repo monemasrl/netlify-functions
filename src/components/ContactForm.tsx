@@ -122,7 +122,7 @@ export const ContactForm = () => {
                             margin="dense"
                             error={Boolean(errors.first_name) && Boolean(touched.first_name)}
                         />
-                        {errors.email && (<ErrorMessage name="first_name" />)}
+                        {errors.first_name && (<ErrorMessage name="first_name" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Last Name</FormLabel>
@@ -131,7 +131,7 @@ export const ContactForm = () => {
                             margin="dense"
                             error={Boolean(errors.last_name) && Boolean(touched.last_name)}
                         />
-                        {errors.email && (<ErrorMessage name="last_name" />)}
+                        {errors.last_name && (<ErrorMessage name="last_name" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Email Address</FormLabel>
@@ -152,7 +152,7 @@ export const ContactForm = () => {
                             margin="dense"
                             error={Boolean(errors.phone) && Boolean(touched.phone)}
                         />
-                        {errors.email && (<ErrorMessage name="phone" />)}
+                        {errors.phone && (<ErrorMessage name="phone" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Mobile</FormLabel>
@@ -161,7 +161,7 @@ export const ContactForm = () => {
                             margin="dense"
                             error={Boolean(errors.mobile) && Boolean(touched.mobile)}
                         />
-                        {errors.email && (<ErrorMessage name="mobile" />)}
+                        {errors.mobile && (<ErrorMessage name="mobile" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Subject</FormLabel>
@@ -170,7 +170,7 @@ export const ContactForm = () => {
                             margin="dense"
                             error={Boolean(errors.subject) && Boolean(touched.subject)}
                         />
-                        {errors.email && (<ErrorMessage name="subject" />)}
+                        {errors.subject && (<ErrorMessage name="subject" />)}
                     </FormControl>
                     <FormControl>
                         <FormLabel>Message</FormLabel>
