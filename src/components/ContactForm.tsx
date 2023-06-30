@@ -3,6 +3,8 @@ import axios from "axios";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers, useField } from "formik";
 import queryString from "query-string";
 import { useSnackbar } from 'notistack';
+import config from "./subjects.json";
+
 import {
     Button,
     Grid,
@@ -47,7 +49,6 @@ const SubjectSelectOptions = (props: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // @ts-ignore
     const [field, meta, helpers] = useField(props.field.name);
-    
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // @ts-ignore
     const onChange = (e: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.FocusEvent<Element, Element> | null, value: {} | null) => {
@@ -57,15 +58,16 @@ const SubjectSelectOptions = (props: any) => {
     return (
     <>
         <Select {...props}
-            placeholder="Select a pet…"
+            placeholder="Seleziona un argomento"
             onChange={onChange}
             value={field.value}
             onBlur={() => helpers.setTouched(true)}
         >
-            <Option value="web">Sviluppo siti corporate, e-commerce (b2b/b2c) </Option>
-            <Option value="email">Servizio di posta elettronica</Option>
-            <Option value="social_adv">Servizi di Social Advertising, Gestione Campagne</Option>
-            <Option value="bird">Altro</Option>
+            {config.subjects.map((option: any) => (
+                <Option key={option} value={option}>
+                    {option}
+                </Option>
+            ))}
         </Select>
     </>
 )}
