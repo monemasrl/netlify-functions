@@ -30,7 +30,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
      * }
      */
 
-    const { first_name, last_name, email, phone, subject, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content, ...rest } = body.data;
+    const { first_name, last_name, email, phone, mobile, subject, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content, ...rest } = body.data;
     const requestBody = {
       "id": body.id,
       "site_url": body.site_url,
@@ -40,6 +40,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       "last_name": last_name,
       "email": email,
       "phone": phone,
+      "mobile": mobile,
       "subject": subject,
       "message": message,
       "utm_source": utm_source,
