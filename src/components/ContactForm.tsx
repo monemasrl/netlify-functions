@@ -106,7 +106,9 @@ export const ContactForm = () => {
                         message: Yup.string()
                             .max(1000, "Must be 1000 characters or less")
                             .required("Required"),
-                    })}
+                    }, [
+                        ['phone', 'mobile']
+                    ])}
                     onSubmit={handleSubmit}
                 >
                     {({errors, touched, isValid, dirty}) =>(
