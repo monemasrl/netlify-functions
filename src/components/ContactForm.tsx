@@ -78,7 +78,7 @@ export const ContactForm = () => {
     const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelpers<ContactFormType>) => {
         formikHelpers.setSubmitting(true);
         let formData = new FormData()
-        formData.append('form-name', 'contact')
+        formData.append('form-name', config.formName)
         formData.append('first_name', values.first_name)
         formData.append('last_name', values.last_name)
         formData.append('email', values.email)
@@ -183,7 +183,7 @@ export const ContactForm = () => {
                     onSubmit={handleSubmit}
                 >
                     {({errors, touched, isValid, dirty}) =>(
-                    <Form name="contact" data-netlify="true" data-netlify-honeypot="bot-field">
+                    <Form name={config.formName} data-netlify="true" data-netlify-honeypot="bot-field">
                         <Field type="hidden" name="form-name" />
                         <Field type="hidden" name="bot-field" />
                     <FormControl>

@@ -4,6 +4,12 @@ import axios from 'axios';
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
   try {
     const API_ENDPOINT = process.env.CRM_API_ENDPOINT;
+    if (!API_ENDPOINT) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Missing CRM API endpoint' }),
+      };
+    }
 
     if (event.body === null) {
       return {
