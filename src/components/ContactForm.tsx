@@ -21,6 +21,12 @@ import {
 } from "@mui/joy";
 import * as Yup from "yup";
 
+type UTMType = {
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+};
+
 type ContactFormType = {
     "form-name": string;
     "bot-field": string;
@@ -31,6 +37,9 @@ type ContactFormType = {
     phone?: string;
     mobile?: string;
     message: string;
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
 };
 
 const ContactFormInitialValues: ContactFormType = {
@@ -42,7 +51,7 @@ const ContactFormInitialValues: ContactFormType = {
     last_name: "",
     email: "",
     subject: "",
-    message: "",
+    message: ""
 };
 
 const SubjectSelectOptions = (props: any) => {
@@ -72,7 +81,7 @@ const SubjectSelectOptions = (props: any) => {
     </>
 )}
 
-export const ContactForm = () => {
+export const ContactForm = (props: UTMType) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelpers<ContactFormType>) => {
@@ -85,6 +94,9 @@ export const ContactForm = () => {
         formData.append('subject', values.subject)
         formData.append('message', values.message)
         formData.append('bot-field', values['bot-field'])
+        if (props.utm_source) formData.append('utm_source', props.utm_source)
+        if (props.utm_medium) formData.append('utm_medium', props.utm_medium)
+        if (props.utm_campaign) formData.append('utm_campaign', props.utm_campaign)
         if (values.phone) formData.append('phone', values.phone)
         if (values.mobile) formData.append('mobile', values.mobile)
     

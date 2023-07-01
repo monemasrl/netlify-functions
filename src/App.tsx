@@ -4,9 +4,21 @@ import netlifyLogo from './assets/netlify.svg'
 import formikLogo from './assets/formik.svg'
 import './App.css'
 import { ContactForm } from './components/ContactForm'
+import { CookiesProvider, useCookies } from "react-cookie";
 import '@fontsource/public-sans';
 
 function App() {
+  const query = new URLSearchParams(window.location.search);
+  // @ts-ignore
+  const [cookies, setCookie] = useCookies(['utm_campaign', 'utm_source', 'utm_medium']);
+
+  const utm = {
+    utm_campaign: query.get('utm_campaign') || cookies.utm_campaign || undefined,
+    utm_source: query.get('utm_source') || cookies.utm_source || undefined,
+    utm_medium: query.get('utm_medium') || cookies.utm_medium || undefined,
+  }
+
+
   return (
     <>
       <div>
@@ -28,7 +40,9 @@ function App() {
       </div>
       <h1>Vite + React + Formik + Yup + Netlify Functions</h1>
 
-      <ContactForm />
+      <CookiesProvider>
+        <ContactForm {...utm} />
+      </CookiesProvider>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
