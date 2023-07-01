@@ -86,21 +86,8 @@ export const ContactForm = (props: UTMType) => {
 
     const handleSubmit = async (values: ContactFormType, formikHelpers: FormikHelpers<ContactFormType>) => {
         formikHelpers.setSubmitting(true);
-        let formData = new FormData()
-        formData.append('form-name', config.formName)
-        formData.append('first_name', values.first_name)
-        formData.append('last_name', values.last_name)
-        formData.append('email', values.email)
-        formData.append('subject', values.subject)
-        formData.append('message', values.message)
-        formData.append('bot-field', values['bot-field'])
-        if (props.utm_source) formData.append('utm_source', props.utm_source)
-        if (props.utm_medium) formData.append('utm_medium', props.utm_medium)
-        if (props.utm_campaign) formData.append('utm_campaign', props.utm_campaign)
-        if (values.phone) formData.append('phone', values.phone)
-        if (values.mobile) formData.append('mobile', values.mobile)
-    
-        const data = queryString.stringify(values)
+        const formData: ContactFormType = { ...values, ...props}
+        const data = queryString.stringify(formData)
 
         try {
             await axios.post<FormData>('/', data, {
