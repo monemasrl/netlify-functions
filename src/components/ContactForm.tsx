@@ -3,7 +3,7 @@ import axios from "axios";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers, useField } from "formik";
 import queryString from "query-string";
 import { useSnackbar } from 'notistack';
-import config from "./subjects.json";
+import config from "../config.json";
 
 import {
     Button,
@@ -34,7 +34,7 @@ type ContactFormType = {
 };
 
 const ContactFormInitialValues: ContactFormType = {
-    "form-name": "contact",
+    "form-name": config.formName,
     "bot-field": "",
     first_name: "",
     phone: "",
@@ -96,6 +96,7 @@ export const ContactForm = () => {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
+            formikHelpers.resetForm();
             enqueueSnackbar('Richiesta inviata con successo', { 
                 variant: 'success',
                 autoHideDuration: 2000,
@@ -145,7 +146,7 @@ export const ContactForm = () => {
         <Grid sm={6} xs={12}>
         <Sheet>
             <Box m={5} p={3}>
-                <Typography level="h5">Basic Formik Form Validation</Typography>
+                <Typography level="h5">{config.title}</Typography>
                 <Formik
                     initialValues={ContactFormInitialValues}
                     validationSchema={Yup.object().shape({
@@ -186,7 +187,7 @@ export const ContactForm = () => {
                         <Field type="hidden" name="form-name" />
                         <Field type="hidden" name="bot-field" />
                     <FormControl>
-                        <FormLabel>First Name</FormLabel>
+                        <FormLabel>Nome</FormLabel>
                         <Field as={Input} 
                             name="first_name"
                             margin="dense"
@@ -195,7 +196,7 @@ export const ContactForm = () => {
                         {errors.first_name && (<ErrorMessage name="first_name" />)}
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Last Name</FormLabel>
+                        <FormLabel>Cognome</FormLabel>
                         <Field as={Input} 
                             name="last_name"
                             margin="dense"
@@ -204,7 +205,7 @@ export const ContactForm = () => {
                         {errors.last_name && (<ErrorMessage name="last_name" />)}
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Email Address</FormLabel>
+                        <FormLabel>Email</FormLabel>
                         <Field 
                             as={Input} 
                             name="email" 
@@ -216,7 +217,7 @@ export const ContactForm = () => {
                         {errors.email && (<ErrorMessage name="email" />)}
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Phone</FormLabel>
+                        <FormLabel>Telefono</FormLabel>
                         <Field as={Input} 
                             name="phone"
                             margin="dense"
@@ -225,7 +226,7 @@ export const ContactForm = () => {
                         {errors.phone && (<ErrorMessage name="phone" />)}
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Mobile</FormLabel>
+                        <FormLabel>Cellulare</FormLabel>
                         <Field as={Input} 
                             name="mobile"
                             margin="dense"
@@ -234,7 +235,7 @@ export const ContactForm = () => {
                         {errors.mobile && (<ErrorMessage name="mobile" />)}
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Subject</FormLabel>
+                        <FormLabel>Oggetto della richiesta</FormLabel>
                         <Field 
                             component={SubjectSelectOptions} 
                             name="subject"
@@ -242,7 +243,7 @@ export const ContactForm = () => {
                         {errors.subject && (<ErrorMessage name="subject" />)}
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Message</FormLabel>
+                        <FormLabel>Dettagli</FormLabel>
                         <Field 
                             name="message"
                             as={Textarea}
